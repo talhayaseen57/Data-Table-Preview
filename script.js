@@ -52,7 +52,43 @@ function renderTable(page = 1) {
         tableBody.appendChild(tr);
     });
 
-    
+    renderPagination();
 }
 
+// Function to render pagination
+function renderPagination() {
+    const pagination = document.getElementById('pagination');
+    pagination.innerHTML = '';
+
+    const totalPages = Math.ceil(data.length / rowsPerPage);
+
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+        li.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i})">${i}</a>`;
+        pagination.appendChild(li);
+    }
+}
+
+// Function to handle page change
+function goToPage(page) {
+    currentPage = page;
+    renderTable(page);
+}
+
+// Function to handle sorting
+function sortTable(columnIndex) {
+    data.sort((a, b) => {
+        const valA = Object.values(a)[columnIndex].toString().toLowerCase();
+        const valB = Object.values(b)[columnIndex].toString().toLowerCase();
+
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
+    });
+
+    renderTable(currentPage);
+}
+
+// Initial table render
 renderTable();
