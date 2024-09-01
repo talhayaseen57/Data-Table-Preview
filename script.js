@@ -42,7 +42,7 @@ function renderTable(page = 1) {
     paginatedData.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${row.IdReagent}</td>
+            <td>${row.ReagentCode}</td>
             <td>${row.en}</td>
             <td>${row.Disabled}</td>
         `;
@@ -92,7 +92,7 @@ function searchTable() {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
     
     const filteredData = data.filter(row => 
-        row.IdReagent.toString().includes(searchInput) ||
+        row.ReagentCode.toString().includes(searchInput) ||
         row.en.toLowerCase().includes(searchInput)
     );
 
@@ -107,7 +107,7 @@ function renderFilteredTable(filteredData) {
     filteredData.forEach(row => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${row.IdReagent}</td>
+            <td>${row.ReagentCode}</td>
             <td>${row.en}</td>
             <td>${row.Disabled}</td>
         `;
