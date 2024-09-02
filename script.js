@@ -37,13 +37,15 @@ let currentPage = 1;
 let rowsPerPage = 5;
 
 // Function to render the table
-function renderTable(page = 1) {
+function renderTable(page, dataToRender = data) {
     const tableBody = document.getElementById('tableBody');
     tableBody.innerHTML = '';
 
     const startIndex = (page - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    const paginatedData = data.slice(startIndex, endIndex);
+    const paginatedData = dataToRender.slice(startIndex, endIndex);
+    console.log(dataToRender);
+    
 
     paginatedData.forEach(row => {
         const tr = document.createElement('tr');
@@ -55,24 +57,32 @@ function renderTable(page = 1) {
         tableBody.appendChild(tr);
     });
 
-    renderPagination();
+    renderPagination(dataToRender);
 }
 
 // Function to render pagination
-function renderPagination() {
+function renderPagination(dataWhilePagination) {
     const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
 
-    const totalPages = Math.ceil(data.length / rowsPerPage);
+    const totalPages = Math.ceil(dataWhilePagination.length / rowsPerPage);
+    console.log(totalPages);
+    
 
     const firstPage = document.createElement('li');
     firstPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-    firstPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${1})"><<</a>`;
+    firstPage.innerHTML = `<a class="page-link" href="#"><<</a>`;
+    firstPage.addEventListener('click', function() {
+        goToPage(1, dataWhilePagination);
+    });
     pagination.appendChild(firstPage);
 
     const previousPage = document.createElement('li');
     previousPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-    previousPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage-1})"><</a>`;
+    previousPage.innerHTML = `<a class="page-link" href="#"><</a>`;
+    previousPage.addEventListener('click', function() {
+        goToPage(currentPage - 1, dataWhilePagination);
+    });
     pagination.appendChild(previousPage);
 
     // Dynamic page numbers
@@ -101,52 +111,83 @@ function renderPagination() {
 
     // Add pages before dots
     if (startPage > 1) {
-            const dots = document.createElement('li');
-            dots.className = `page-item disabled`;
-            dots.innerHTML = `<span class="page-link">...</span>`;
-            pagination.appendChild(dots);
+        const dots = document.createElement('li');
+        dots.className = `page-item disabled`;
+        dots.innerHTML = `<span class="page-link">...</span>`;
+        pagination.appendChild(dots);
     }
 
     // Add main page numbers
     for (let i = startPage; i <= endPage; i++) {
         const li = document.createElement('li');
         li.className = `page-item ${i === currentPage ? 'active' : ''}`;
-        li.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i})">${i}</a>`;
+        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+        li.addEventListener('click', function() {
+            goToPage(i, dataWhilePagination);
+        });
         pagination.appendChild(li);
     }
 
     // Add pages after dots
     if (endPage < totalPages) {
-            const dots = document.createElement('li');
-            dots.className = `page-item disabled`;
-            dots.innerHTML = `<span class="page-link">...</span>`;
-            pagination.appendChild(dots);
+        const dots = document.createElement('li');
+        dots.className = `page-item disabled`;
+        dots.innerHTML = `<span class="page-link">...</span>`;
+        pagination.appendChild(dots);
     }
 
     const nextPage = document.createElement('li');
     nextPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-    nextPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage+1})">></a>`;
+    nextPage.innerHTML = `<a class="page-link" href="#">></a>`;
+    nextPage.addEventListener('click', function() {
+        goToPage(currentPage + 1, dataWhilePagination);
+    });
     pagination.appendChild(nextPage);
 
     const lastPage = document.createElement('li');
     lastPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-    lastPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${totalPages})">>></a>`;
+    lastPage.innerHTML = `<a class="page-link" href="#">>></a>`;
+    lastPage.addEventListener('click', function() {
+        goToPage(totalPages, dataWhilePagination);
+    });
     pagination.appendChild(lastPage);
 }
 
 // Function to handle page change
-function goToPage(page) {
+function goToPage(page, currentData) {
     currentPage = page;
-    renderTable(page);
+    renderTable(page, currentData);
+}
+
+// Function to handle searching
+function searchTable(page) {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+
+    // if (searchInput != '') {
+        const filteredData = data.filter(row =>
+            row.ReagentCode.toString().includes(searchInput) ||
+            row.en.toLowerCase().includes(searchInput)
+        );
+
+        renderTable(page, filteredData);
+    // }
 }
 
 // Event listeners
-// document.getElementById('searchInput').addEventListener('input', searchTable);
-document.getElementById('rowsPerPage').addEventListener('change', function() {
+document.getElementById('searchInput').addEventListener('input', function () {
+    currentPage = 1;
+    searchTable(currentPage)
+});
+
+document.getElementById('rowsPerPage').addEventListener('change', function () {
     rowsPerPage = parseInt(this.value);
     currentPage = 1;
-    renderTable(currentPage);
+
+    const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
+    if (currentSearchInput != '') {
+        searchTable(currentPage);
+    }
 });
 
 // Initial table render
-renderTable();
+renderTable(1, data);
