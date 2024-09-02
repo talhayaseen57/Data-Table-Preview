@@ -244,6 +244,24 @@ function exportToExcel() {
     XLSX.writeFile(wb, 'table_data.xlsx');
 }
 
+// Function to print the table
+function printTable() {
+    const printWindow = window.open('', '', 'height=600,width=800');
+    printWindow.document.write('<html><head><title>Print Table</title>');
+    printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
+    // Adding custom styles for printing
+    printWindow.document.write('<style>');
+    printWindow.document.write('body { margin: 25px; }'); // Adjust margins as needed
+    printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
+    printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
+    printWindow.document.write('</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(document.querySelector('table').outerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
+}
+
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', function () {
     currentPage = 1;
