@@ -236,6 +236,14 @@ function exportToCSV() {
     a.click();
 }
 
+// Function to export table data to Excel
+function exportToExcel() {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.table_to_sheet(document.querySelector('table'));
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'table_data.xlsx');
+}
+
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', function () {
     currentPage = 1;
