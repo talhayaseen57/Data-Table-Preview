@@ -251,7 +251,7 @@ function printTable() {
     printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
     // Adding custom styles for printing
     printWindow.document.write('<style>');
-    printWindow.document.write('body { margin: 25px; }'); // Adjust margins as needed
+    printWindow.document.write('body { margin: 20px; }'); // Adjust margins as needed
     printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
     printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
     printWindow.document.write('</style>');
