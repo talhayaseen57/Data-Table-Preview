@@ -169,7 +169,7 @@ function searchTable(page) {
 }
 
 // Function to handle sorting
-function sortTable(columnIndex) {
+function sortTable(columnIndex, headerElement) {
     let dataToSort = [...data]; // Clone data to avoid modifying the original array
     const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
 
@@ -191,8 +191,10 @@ function sortTable(columnIndex) {
     // Apply sorting
     if (sortState.order === 'asc') {
         dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] > b[columnKeys[columnIndex]]) ? 1 : -1);
+        headerElement.querySelector('.sort-arrow').innerHTML = '&#9650;';
     } else if (sortState.order === 'desc') {
         dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] < b[columnKeys[columnIndex]]) ? 1 : -1);
+        headerElement.querySelector('.sort-arrow').innerHTML = '&#9660;';
     }
 
     // If sorting is undone, render the table with the current filtered/unfiltered data
