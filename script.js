@@ -173,6 +173,13 @@ function sortTable(columnIndex, headerElement) {
     let dataToSort = [...data]; // Clone data to avoid modifying the original array
     const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
 
+    // Reset sorting for all column headers
+    document.querySelectorAll('.sortable').forEach((header, index) => {
+        if (index !== columnIndex) {
+            header.querySelector('.sort-arrow').innerHTML = ''; // Clear arrow for non-sorted columns
+        }
+    });
+
     if (sortState.columnIndex === columnIndex) {
         // Toggle sorting order
         if (sortState.order === 'none' || sortState.order === 'desc') {
@@ -185,16 +192,19 @@ function sortTable(columnIndex, headerElement) {
     } else {
         // New column, reset sorting
         sortState.columnIndex = columnIndex;
-        sortState.order = 'asc';
+        sortState.order = 'asc'; // Start with ascending order for a new column
     }
 
     // Apply sorting
     if (sortState.order === 'asc') {
         dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] > b[columnKeys[columnIndex]]) ? 1 : -1);
-        headerElement.querySelector('.sort-arrow').innerHTML = '&#9650;';
+        headerElement.querySelector('.sort-arrow').innerHTML = '&#9650;'; // Up arrow for ascending
     } else if (sortState.order === 'desc') {
         dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] < b[columnKeys[columnIndex]]) ? 1 : -1);
-        headerElement.querySelector('.sort-arrow').innerHTML = '&#9660;';
+        headerElement.querySelector('.sort-arrow').innerHTML = '&#9660;'; // Down arrow for descending
+    } else if (sortState.order === 'none') {
+        dataToSort = [...data]; // Reset to the original unsorted data
+        headerElement.querySelector('.sort-arrow').innerHTML = ''; // No arrow when not sorted
     }
 
     // If sorting is undone, render the table with the current filtered/unfiltered data
