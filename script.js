@@ -35,6 +35,7 @@ const data = [
 
 let currentPage = 1;
 let rowsPerPage = 5;
+let sortState = { columnIndex: -1, order: 'none' }; // Initial state
 
 // Function to render the table
 function renderTable(page = 1, dataToRender = data) {
@@ -158,7 +159,7 @@ function goToPage(page, currentData) {
 // Function to handle searching
 function searchTable(page) {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
-
+    
     const filteredData = data.filter(row =>
         row.ReagentCode.toString().includes(searchInput) ||
         row.en.toLowerCase().includes(searchInput)
@@ -168,20 +169,44 @@ function searchTable(page) {
 }
 
 // Function to handle sorting
-// function sortTable(columnIndex) {
-//     data.sort((a, b) => {
-//         const valA = Object.values(a)[columnIndex].toString().toLowerCase();
-//         const valB = Object.values(b)[columnIndex].toString().toLowerCase();
-//         console.log("valA: " + valA);
-//         console.log("valB: " + valB);                
+function sortTable(columnIndex) {
+    let dataToSort = [...data]; // Clone data to avoid modifying the original array
+    const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
 
-//         if (valA < valB) return -1;
-//         if (valA > valB) return 1;
-//         return 0;
-//     });
+    if (sortState.columnIndex === columnIndex) {
+        // Toggle sorting order
+        if (sortState.order === 'none' || sortState.order === 'desc') {
+            sortState.order = 'asc';
+        } else if (sortState.order === 'asc') {
+            sortState.order = 'desc';
+        } else {
+            sortState.order = 'none';
+        }
+    } else {
+        // New column, reset sorting
+        sortState.columnIndex = columnIndex;
+        sortState.order = 'asc';
+    }
 
-//     renderTable(currentPage);
-// }
+    // Apply sorting
+    if (sortState.order === 'asc') {
+        dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] > b[columnKeys[columnIndex]]) ? 1 : -1);
+    } else if (sortState.order === 'desc') {
+        dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] < b[columnKeys[columnIndex]]) ? 1 : -1);
+    }
+
+    // If sorting is undone, render the table with the current filtered/unfiltered data
+    const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
+    let currentData = dataToSort;
+    if (currentSearchInput !== '') {
+        currentData = dataToSort.filter(row =>
+            row.ReagentCode.toString().includes(currentSearchInput) ||
+            row.en.toLowerCase().includes(currentSearchInput)
+        );
+    }
+
+    renderTable(currentPage, sortState.order === 'none' ? currentData : dataToSort);
+}
 
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', function () {
