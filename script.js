@@ -25,6 +25,12 @@ const data = [
     { IdReagent: 7084, ReagentCode: 6977, en: "TOSOH System Reagent", it: "TOSOH System Reagent", fr: "TOSOH System Reagent", de: "TOSOH System Reagent", xx: "TOSOH System Reagent", LabCode: 0, Disabled: 0 },
     { IdReagent: 7103, ReagentCode: 6980, en: "WAKO Reagents", it: "WAKO Reagents", fr: "WAKO Reagents", de: "WAKO Reagents", xx: "WAKO Reagents", LabCode: 0, Disabled: 0 },
     { IdReagent: 7105, ReagentCode: 6981, en: "BIORAD System Reagent", it: "BIORAD System Reagent", fr: "BIORAD System Reagent", de: "BIORAD System Reagent", xx: "BIORAD System Reagent", LabCode: 0, Disabled: 0 },
+    { IdReagent: 7001, ReagentCode: 100110, en: "SIEMENS Multistix 02", it: "SIEMENS Multistix", fr: "SIEMENS Multistix", de: "SIEMENS Multistix", xx: "SIEMENS Multistix", LabCode: 0, Disabled: 0 },
+    { IdReagent: 7072, ReagentCode: 100111, en: "SIEMENS Clinitek 03", it: "SIEMENS Clinitek", fr: "SIEMENS Clinitek", de: "SIEMENS Clinitek", xx: "SIEMENS Clinitek", LabCode: 0, Disabled: 0 },
+    { IdReagent: 7073, ReagentCode: 100112, en: "MINDRAY U-11 02", it: "MINDRAY U-11", fr: "MINDRAY U-11", de: "MINDRAY U-11", xx: "MINDRAY U-11", LabCode: 0, Disabled: 1 },
+    { IdReagent: 7051, ReagentCode: 100110, en: "SIEMENS Multistix 03", it: "SIEMENS Multistix", fr: "SIEMENS Multistix", de: "SIEMENS Multistix", xx: "SIEMENS Multistix", LabCode: 0, Disabled: 0 },
+    { IdReagent: 7052, ReagentCode: 100111, en: "SIEMENS Clinitek 02", it: "SIEMENS Clinitek", fr: "SIEMENS Clinitek", de: "SIEMENS Clinitek", xx: "SIEMENS Clinitek", LabCode: 0, Disabled: 0 },
+    { IdReagent: 7098, ReagentCode: 100112, en: "MINDRAY U-11 03", it: "MINDRAY U-11", fr: "MINDRAY U-11", de: "MINDRAY U-11", xx: "MINDRAY U-11", LabCode: 0, Disabled: 1 },
 ];
 
 let currentPage = 1;
@@ -59,12 +65,73 @@ function renderPagination() {
 
     const totalPages = Math.ceil(data.length / rowsPerPage);
 
-    for (let i = 1; i <= totalPages; i++) {
+    const firstPage = document.createElement('li');
+    firstPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+    firstPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${1})"><<</a>`;
+    pagination.appendChild(firstPage);
+
+    const previousPage = document.createElement('li');
+    previousPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+    previousPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage-1})"><</a>`;
+    pagination.appendChild(previousPage);
+
+    // Dynamic page numbers
+    const pageNumbersToShow = 3;
+    let startPage, endPage;
+
+    if (totalPages <= pageNumbersToShow) {
+        // Show all pages if total pages are less than or equal to the pages to show
+        startPage = 1;
+        endPage = totalPages;
+    } else {
+        if (currentPage <= 2) {
+            // If current page is near the start
+            startPage = 1;
+            endPage = pageNumbersToShow;
+        } else if (currentPage >= totalPages - 1) {
+            // If current page is near the end
+            startPage = totalPages - (pageNumbersToShow - 1);
+            endPage = totalPages;
+        } else {
+            // Show the current page in the middle
+            startPage = currentPage - 1;
+            endPage = currentPage + 1;
+        }
+    }
+
+    // Add pages before dots
+    if (startPage > 1) {
+            const dots = document.createElement('li');
+            dots.className = `page-item disabled`;
+            dots.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(dots);
+    }
+
+    // Add main page numbers
+    for (let i = startPage; i <= endPage; i++) {
         const li = document.createElement('li');
         li.className = `page-item ${i === currentPage ? 'active' : ''}`;
         li.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${i})">${i}</a>`;
         pagination.appendChild(li);
     }
+
+    // Add pages after dots
+    if (endPage < totalPages) {
+            const dots = document.createElement('li');
+            dots.className = `page-item disabled`;
+            dots.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(dots);
+    }
+
+    const nextPage = document.createElement('li');
+    nextPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+    nextPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${currentPage+1})">></a>`;
+    pagination.appendChild(nextPage);
+
+    const lastPage = document.createElement('li');
+    lastPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+    lastPage.innerHTML = `<a class="page-link" href="#" onclick="goToPage(${totalPages})">>></a>`;
+    pagination.appendChild(lastPage);
 }
 
 // Function to handle page change
@@ -73,50 +140,8 @@ function goToPage(page) {
     renderTable(page);
 }
 
-// Function to handle sorting
-function sortTable(columnIndex) {
-    data.sort((a, b) => {
-        const valA = Object.values(a)[columnIndex].toString().toLowerCase();
-        const valB = Object.values(b)[columnIndex].toString().toLowerCase();
-
-        if (valA < valB) return -1;
-        if (valA > valB) return 1;
-        return 0;
-    });
-
-    renderTable(currentPage);
-}
-
-// Function to handle searching
-function searchTable() {
-    const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    
-    const filteredData = data.filter(row => 
-        row.ReagentCode.toString().includes(searchInput) ||
-        row.en.toLowerCase().includes(searchInput)
-    );
-
-    renderFilteredTable(filteredData);
-}
-
-// Function to render filtered table
-function renderFilteredTable(filteredData) {
-    const tableBody = document.getElementById('tableBody');
-    tableBody.innerHTML = '';
-
-    filteredData.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${row.ReagentCode}</td>
-            <td>${row.en}</td>
-            <td>${row.Disabled}</td>
-        `;
-        tableBody.appendChild(tr);
-    });
-}
-
 // Event listeners
-document.getElementById('searchInput').addEventListener('input', searchTable);
+// document.getElementById('searchInput').addEventListener('input', searchTable);
 document.getElementById('rowsPerPage').addEventListener('change', function() {
     rowsPerPage = parseInt(this.value);
     currentPage = 1;
