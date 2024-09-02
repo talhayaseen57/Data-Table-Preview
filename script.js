@@ -220,6 +220,22 @@ function sortTable(columnIndex, headerElement) {
     renderTable(currentPage, currentSearchInput === '' ? dataToSort : currentData);
 }
 
+// Function to export table data to CSV
+function exportToCSV() {
+    const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+    const csv = rows.map(row => {
+        const cells = Array.from(row.querySelectorAll('td'));
+        return cells.map(cell => `"${cell.textContent.replace(/"/g, '""')}"`).join(',');
+    }).join('\n');
+
+    const csvBlob = new Blob([csv], { type: 'text/csv' });
+    const csvUrl = URL.createObjectURL(csvBlob);
+    const a = document.createElement('a');
+    a.href = csvUrl;
+    a.download = 'table_data.csv';
+    a.click();
+}
+
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', function () {
     currentPage = 1;

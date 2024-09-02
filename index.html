@@ -19,6 +19,7 @@
             <div class="col-md-6">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search...">
             </div>
+
             <div class="col-md-6 text-end">
                 <select id="rowsPerPage" class="form-select w-auto d-inline">
                     <option value="5">5 rows</option>
@@ -26,6 +27,13 @@
                     <option value="20">20 rows</option>
                     <option value="50">50 rows</option>
                 </select>
+            </div>
+        </div>
+
+        <!-- Export and Print Buttons -->
+        <div class="row mb-3">
+            <div class="col-md-12 text-end">
+                <button class="btn btn-primary" onclick="exportToCSV()">Export to CSV</button>
             </div>
         </div>
 
@@ -52,6 +60,11 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Include libraries for exporting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Include Bootstrap libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
