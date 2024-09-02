@@ -168,6 +168,43 @@ function searchTable(page) {
     renderTable(page, filteredData);
 }
 
+// Function to show dropdown with suggestions
+function showDropdown() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const dropdown = document.getElementById('suggestionsDropdown');
+
+    // Filter the data to find matching items
+    const suggestions = data.filter(row =>
+        row.ReagentCode.toString().toLowerCase().includes(searchInput) ||
+        row.en.toLowerCase().includes(searchInput)
+    );
+
+    // Clear previous suggestions
+    dropdown.innerHTML = '';
+
+    if (suggestions.length > 0 && searchInput.length > 0) {
+        suggestions.forEach(suggestion => {
+            const item = document.createElement('div');
+            item.className = 'dropdown-item';
+            item.textContent = `${suggestion.ReagentCode} - ${suggestion.en}`;
+            item.onclick = () => selectSuggestion(suggestion);
+            dropdown.appendChild(item);
+        });
+        dropdown.style.display = 'block'; // Show the dropdown
+    } else {
+        dropdown.style.display = 'none'; // Hide dropdown if no suggestions
+    }
+}
+
+// Function to handle suggestion selection
+function selectSuggestion(suggestion) {
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = `${suggestion.en}`;
+    
+    document.getElementById('suggestionsDropdown').style.display = 'none'; // Hide dropdown
+    searchTable(1); // Search with the selected suggestion
+}
+
 // Function to handle sorting
 function sortTable(columnIndex, headerElement) {
     let dataToSort = [...data]; // Clone data to avoid modifying the original array
@@ -278,6 +315,14 @@ document.getElementById('rowsPerPage').addEventListener('change', function () {
     }
     else {
         renderTable()
+    }
+});
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('suggestionsDropdown');
+    const searchInput = document.getElementById('searchInput');
+    if (!dropdown.contains(event.target) && !searchInput.contains(event.target)) {
+        dropdown.style.display = 'none';
     }
 });
 

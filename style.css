@@ -1,3 +1,9 @@
 .sortable:hover {
   cursor: pointer;
 }
+
+#suggestionsDropdown {
+    max-height: 200px;
+    overflow-y: auto;
+    cursor: pointer;
+}
