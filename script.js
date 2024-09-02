@@ -181,14 +181,14 @@ function sortTable(columnIndex, headerElement) {
     });
 
     if (sortState.columnIndex === columnIndex) {
-        // Toggle sorting order
-        if (sortState.order === 'none' || sortState.order === 'desc') {
-            sortState.order = 'asc';
-        } else if (sortState.order === 'asc') {
-            sortState.order = 'desc';
-        } else {
-            sortState.order = 'none';
-        }
+        // Toggle sorting order in the sequence: asc -> desc -> none
+    if (sortState.order === 'none') {
+        sortState.order = 'asc'; // First click: ascending
+    } else if (sortState.order === 'asc') {
+        sortState.order = 'desc'; // Second click: descending
+    } else if (sortState.order === 'desc') {
+        sortState.order = 'none'; // Third click: no sorting (reset)
+    }
     } else {
         // New column, reset sorting
         sortState.columnIndex = columnIndex;
