@@ -17,13 +17,13 @@
 
         <!-- Search Bar -->
         <div class="row mb-3">
-            <div class="col-md-4 position-relative">
+            <div class="nav-bar col-md-4 position-relative">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="showDropdown()" autocomplete="off">
                 <div id="suggestionsDropdown" class="dropdown-menu w-100" style="display: none;"></div>
             </div>
 
             <!-- Export Buttons (Icons Only) -->
-            <div class="col-md-6 text-end">
+            <div class="nav-bar col-md-6 text-end">
                 <button class="btn btn-primary" onclick="exportToCSV()" title="Export to CSV">
                     <i class="fas fa-file-csv"></i> <!-- CSV Icon -->
                 </button>
@@ -35,7 +35,7 @@
                 </button>
             </div>
 
-            <div class="col-md-2 text-end">
+            <div class="nav-bar col-md-2 text-end">
                 <select id="rowsPerPage" class="form-select w-auto d-inline">
                     <option value="5">5 rows</option>
                     <option value="10">10 rows</option>
