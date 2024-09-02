@@ -205,7 +205,7 @@ function sortTable(columnIndex) {
         );
     }
 
-    renderTable(currentPage, sortState.order === 'none' ? currentData : dataToSort);
+    renderTable(currentPage, currentSearchInput === '' ? dataToSort : currentData);
 }
 
 // Event listeners
