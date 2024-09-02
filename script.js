@@ -37,15 +37,13 @@ let currentPage = 1;
 let rowsPerPage = 5;
 
 // Function to render the table
-function renderTable(page, dataToRender = data) {
+function renderTable(page = 1, dataToRender = data) {
     const tableBody = document.getElementById('tableBody');
     tableBody.innerHTML = '';
 
     const startIndex = (page - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const paginatedData = dataToRender.slice(startIndex, endIndex);
-    console.log(dataToRender);
-    
 
     paginatedData.forEach(row => {
         const tr = document.createElement('tr');
@@ -66,13 +64,11 @@ function renderPagination(dataWhilePagination) {
     pagination.innerHTML = '';
 
     const totalPages = Math.ceil(dataWhilePagination.length / rowsPerPage);
-    console.log(totalPages);
     
-
     const firstPage = document.createElement('li');
     firstPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
     firstPage.innerHTML = `<a class="page-link" href="#"><<</a>`;
-    firstPage.addEventListener('click', function() {
+    firstPage.addEventListener('click', function () {
         goToPage(1, dataWhilePagination);
     });
     pagination.appendChild(firstPage);
@@ -80,7 +76,7 @@ function renderPagination(dataWhilePagination) {
     const previousPage = document.createElement('li');
     previousPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
     previousPage.innerHTML = `<a class="page-link" href="#"><</a>`;
-    previousPage.addEventListener('click', function() {
+    previousPage.addEventListener('click', function () {
         goToPage(currentPage - 1, dataWhilePagination);
     });
     pagination.appendChild(previousPage);
@@ -122,7 +118,7 @@ function renderPagination(dataWhilePagination) {
         const li = document.createElement('li');
         li.className = `page-item ${i === currentPage ? 'active' : ''}`;
         li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        li.addEventListener('click', function() {
+        li.addEventListener('click', function () {
             goToPage(i, dataWhilePagination);
         });
         pagination.appendChild(li);
@@ -139,7 +135,7 @@ function renderPagination(dataWhilePagination) {
     const nextPage = document.createElement('li');
     nextPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
     nextPage.innerHTML = `<a class="page-link" href="#">></a>`;
-    nextPage.addEventListener('click', function() {
+    nextPage.addEventListener('click', function () {
         goToPage(currentPage + 1, dataWhilePagination);
     });
     pagination.appendChild(nextPage);
@@ -147,7 +143,7 @@ function renderPagination(dataWhilePagination) {
     const lastPage = document.createElement('li');
     lastPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
     lastPage.innerHTML = `<a class="page-link" href="#">>></a>`;
-    lastPage.addEventListener('click', function() {
+    lastPage.addEventListener('click', function () {
         goToPage(totalPages, dataWhilePagination);
     });
     pagination.appendChild(lastPage);
@@ -163,15 +159,29 @@ function goToPage(page, currentData) {
 function searchTable(page) {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
 
-    // if (searchInput != '') {
-        const filteredData = data.filter(row =>
-            row.ReagentCode.toString().includes(searchInput) ||
-            row.en.toLowerCase().includes(searchInput)
-        );
+    const filteredData = data.filter(row =>
+        row.ReagentCode.toString().includes(searchInput) ||
+        row.en.toLowerCase().includes(searchInput)
+    );
 
-        renderTable(page, filteredData);
-    // }
+    renderTable(page, filteredData);
 }
+
+// Function to handle sorting
+// function sortTable(columnIndex) {
+//     data.sort((a, b) => {
+//         const valA = Object.values(a)[columnIndex].toString().toLowerCase();
+//         const valB = Object.values(b)[columnIndex].toString().toLowerCase();
+//         console.log("valA: " + valA);
+//         console.log("valB: " + valB);                
+
+//         if (valA < valB) return -1;
+//         if (valA > valB) return 1;
+//         return 0;
+//     });
+
+//     renderTable(currentPage);
+// }
 
 // Event listeners
 document.getElementById('searchInput').addEventListener('input', function () {
@@ -187,7 +197,10 @@ document.getElementById('rowsPerPage').addEventListener('change', function () {
     if (currentSearchInput != '') {
         searchTable(currentPage);
     }
+    else {
+        renderTable()
+    }
 });
 
 // Initial table render
-renderTable(1, data);
+renderTable();
