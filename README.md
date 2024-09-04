@@ -1,8 +1,8 @@
-# Data Table Preview
+# HTML Elements
 
-This repository provides a simple and dynamic data table that supports sorting, searching, pagination, and export functionalities. The table is built with HTML, CSS (Bootstrap), and JavaScript.
+This repository provides a customised implementation for simple and dynamic data table that supports sorting, searching, pagination, and export functionalities. The table is built with HTML, CSS (Bootstrap), and JavaScript.
 
-## Features
+## Features of Data Tables / Grid View Table
 
 - **Sortable Columns**: Click on any column header to sort the table by that column.
 - **Searchable Data**: Use the search bar to filter table rows based on the input text.
@@ -12,16 +12,16 @@ This repository provides a simple and dynamic data table that supports sorting, 
 
 ## Demo
 
-You can view a live demo of this project on GitHub Pages:  
-[Data Table Preview](https://talhayaseen57.github.io/Data-Table-Preview/)
+You can view a live demo of this project on GitHub Pages:
+[HTML Elements Preview](https://talhayaseen57.github.io/HTML-Elements/)
 
 Feel free to visit the link to see the data table preview in action.
 
 ## Files
 
-- **index.html**: The main HTML file that contains the structure of the webpage, including the table and search bar.
+- **.html files**: The HTML files contain the structure of the webpage.
 - **style.css**: The CSS file for custom styling (alongside Bootstrap).
-- **script.js**: The JavaScript file that handles data rendering, sorting, searching, pagination, and exporting functionalities.
+- **script.js**: The JavaScript file that handles functionalities.
 
 ## How to Use
 
@@ -29,15 +29,15 @@ To run the project locally, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/talhayaseen57/Data-Table-Preview.git
+   git clone https://github.com/talhayaseen57/HTML-Elements.git
    ```
 2. Navigate to the project directory:
    ```bash
-   cd Data-Table-Preview
+   cd HTML-Elements
    ```
 3. Open the `index.html` file in your web browser.
 
-4. Interact with the table:
+4. Interact with the table in `database.html`:
    - **Search**: Type in the search bar to filter the table rows. Suggestions will appear as you type.
    - **Sort**: Click on the column headers to sort the table.
    - **Paginate**: Use the pagination controls to navigate through the pages.
