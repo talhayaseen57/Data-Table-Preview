@@ -46,7 +46,7 @@
     </div>
 
     <!-- Text Box Elements Section -->
-    <div class="container form-section">
+    <div class="container form-section my-5">
         <h3>Text Boxes and Text Areas</h3>
         <form>
             <!-- Default Size Textbox -->
@@ -92,8 +92,42 @@
         </form>
     </div>
 
+    <div class="container my-5">
+        <h3>Responsive Textboxes</h3>
+
+        <!-- Responsive Textboxes in One Row -->
+        <div class="row">
+            <!-- Success Textbox -->
+            <div class="col-md-4 mb-3">
+                <label for="successInput" class="form-label">Success Textbox</label>
+                <input type="text" class="form-control is-valid" id="successInput" placeholder="Looks good!">
+                <div class="invalid-feedback">
+                    Success text input.
+                </div>
+            </div>
+
+            <!-- Warning Textbox -->
+            <div class="col-md-4 mb-3">
+                <label for="warningInput" class="form-label">Warning Textbox</label>
+                <input type="text" class="form-control is-warning" id="warningInput" placeholder="Be cautious!">
+                <div class="invalid-feedback">
+                    Warning text input.
+                </div>
+            </div>
+
+            <!-- Error Textbox -->
+            <div class="col-md-4 mb-3">
+                <label for="errorInput" class="form-label">Error Textbox</label>
+                <input type="text" class="form-control is-invalid" id="errorInput" placeholder="Something went wrong!">
+                <div class="invalid-feedback">
+                    Please provide a valid input.
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Text Box Elements Section -->
-    <div class="container form-section">
+    <div class="container form-section my-5">
         <h3>Check Boxes</h3>
         <form>
             <!-- Checkbox -->
