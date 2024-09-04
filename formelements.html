@@ -15,7 +15,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">HTML Elements</a>
+            <a class="navbar-brand" href="/">HTML Elements</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="datatable.html">Data Table</a>
@@ -46,6 +46,45 @@
         </div>
     </div>
 
+    <!-- Text Box Elements Section -->
+    <div class="container form-section">
+        <h3>Text Boxes</h3>
+        <form>
+            <!-- Default Size Textbox -->
+            <div class="mb-3">
+                <label for="mediumTextInput" class="form-label">Default Text Input</label>
+                <input type="text" class="form-control" id="textInput" placeholder="Enter text here">
+            </div>
+
+            <!-- Textbox with Custom Width Using Bootstrap Grid -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="halfWidthTextInput" class="form-label">Half-Width Text Input (50%)</label>
+                    <input type="text" class="form-control" id="halfWidthTextInput"
+                        placeholder="50% width on medium screens">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="thirdWidthTextInput" class="form-label">Third-Width Text Input (33%)</label>
+                    <input type="text" class="form-control" id="thirdWidthTextInput"
+                        placeholder="33% width on medium screens">
+                </div>
+            </div>
+
+            <!-- Small Textbox -->
+            <!-- <div class="mb-3">
+                <label for="smallTextInput" class="form-label">Small Text Input</label>
+                <input type="text" class="form-control form-control-sm" id="smallTextInput"
+                    placeholder="Small text input">
+            </div> -->
+
+            <!-- Large Textbox -->
+            <!-- <div class="mb-3">
+                <label for="largeTextInput" class="form-label">Large Text Input</label>
+                <input type="text" class="form-control form-control-lg" id="largeTextInput"
+                    placeholder="Large text input">
+            </div> -->
+        </form>
+    </div>
 
 
     <!-- Footer -->
