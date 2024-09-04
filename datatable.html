@@ -11,14 +11,48 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
-<body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Sortable, Searchable, Paginated Table</h2>
+<body class="bg-light">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">HTML Elements</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="datatable.html">Data Table</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="formelements.html">Form Elements</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
+    <!-- Hero Section -->
+    <div class="container-fluid bg-dark text-light text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Data Table / Grid View</h1>
+            <p class="lead">Data Table Preview is a user-friendly and dynamic data table solution built with HTML, CSS
+                (Bootstrap), and JavaScript. It offers essential features like sortable columns, searchable data,
+                pagination, and export options (CSV, Excel, PDF). Ideal for quick data previews and organization, the
+                table is customizable and easy to integrate.</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
         <!-- Search Bar -->
         <div class="row mb-3">
             <div class="nav-bar col-md-4 position-relative">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="showDropdown()" autocomplete="off">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search..."
+                    oninput="showDropdown()" autocomplete="off">
                 <div id="suggestionsDropdown" class="dropdown-menu w-100" style="display: none;"></div>
             </div>
 
@@ -76,6 +110,16 @@
         </nav>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 HTML Elements. Talha Yaseen Zafar 😊</p>
+        </div>
+    </footer>
+
+
+    
+    <!-- including JavaScript files-->
     <script src="script.js"></script>
 
     <!-- Include libraries for exporting -->
