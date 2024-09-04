@@ -1,21 +1,26 @@
+/* for navigation bar of each page */
+.nav-bar {
+  margin: 2px 0 2px;
+}
+
+/* for sortable column headers */
 .sortable:hover {
   cursor: pointer;
 }
 
+/* for search suggestion dropdown */
 #suggestionsDropdown {
-    max-height: 200px;
-    overflow-y: auto;
-    cursor: pointer;
+  max-height: 200px;
+  overflow-y: auto;
+  cursor: pointer;
 }
 
-.nav-bar {
-    margin: 2px 0 2px;
-}
-
+/* for entry forms */
 .form-section {
   margin-top: 2rem;
 }
 
+/* for text boxes */
 .form-control.is-valid {
   border-color: #198754; /* Green border for success */
   background-color: #d4edda; /* Light green background */
