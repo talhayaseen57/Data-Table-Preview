@@ -12,7 +12,10 @@ This repository provides a simple and dynamic data table that supports sorting, 
 
 ## Demo
 
-To see the table in action, clone the repository and open `index.html` in your browser.
+You can view a live demo of this project on GitHub Pages:  
+[Data Table Preview](https://talhayaseen57.github.io/Data-Table-Preview/)
+
+Feel free to visit the link to see the data table preview in action.
 
 ## Files
 
@@ -22,15 +25,19 @@ To see the table in action, clone the repository and open `index.html` in your b
 
 ## How to Use
 
+To run the project locally, follow these steps:
+
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/talhayaseen57/Data-Table-Preview.git
-    cd Data-Table-Preview
-    ```
+   ```bash
+   git clone https://github.com/talhayaseen57/Data-Table-Preview.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Data-Table-Preview
+   ```
+3. Open the `index.html` file in your web browser.
 
-2. Open `index.html` in your preferred browser.
-
-3. Interact with the table:
+4. Interact with the table:
    - **Search**: Type in the search bar to filter the table rows. Suggestions will appear as you type.
    - **Sort**: Click on the column headers to sort the table.
    - **Paginate**: Use the pagination controls to navigate through the pages.
@@ -54,3 +61,7 @@ These dependencies are loaded via CDN.
 ## Contributing
 
 Feel free to submit issues or pull requests if you have suggestions or improvements.
+
+## License
+
+This project is distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
