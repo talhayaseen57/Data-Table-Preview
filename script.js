@@ -38,132 +38,234 @@ let rowsPerPage = 5;
 let sortState = { columnIndex: -1, order: 'none' }; // Initial state
 
 // Function to render the table
-function renderTable(page = 1, dataToRender = data) {
-    const tableBody = document.getElementById('tableBody');
-    tableBody.innerHTML = '';
+const tableBodyElement = document.getElementById('tableBody');
+if (tableBodyElement) {
+    function renderTable(page = 1, dataToRender = data) {
+        tableBodyElement.innerHTML = '';
 
-    const startIndex = (page - 1) * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-    const paginatedData = dataToRender.slice(startIndex, endIndex);
+        const startIndex = (page - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const paginatedData = dataToRender.slice(startIndex, endIndex);
 
-    paginatedData.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${row.ReagentCode}</td>
-            <td>${row.en}</td>
-            <td>${row.Disabled}</td>
-        `;
-        tableBody.appendChild(tr);
-    });
+        paginatedData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row.ReagentCode}</td>
+                <td>${row.en}</td>
+                <td>${row.Disabled}</td>
+            `;
+            tableBodyElement.appendChild(tr);
+        });
 
-    renderPagination(dataToRender);
-}
+        renderPagination(dataToRender);
+    }
 
-// Function to render pagination
-function renderPagination(dataWhilePagination) {
-    const pagination = document.getElementById('pagination');
-    pagination.innerHTML = '';
 
-    const totalPages = Math.ceil(dataWhilePagination.length / rowsPerPage);
-    
-    const firstPage = document.createElement('li');
-    firstPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-    firstPage.innerHTML = `<a class="page-link" href="#"><<</a>`;
-    firstPage.addEventListener('click', function () {
-        goToPage(1, dataWhilePagination);
-    });
-    pagination.appendChild(firstPage);
+    // Function to render pagination
+    function renderPagination(dataWhilePagination) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
 
-    const previousPage = document.createElement('li');
-    previousPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
-    previousPage.innerHTML = `<a class="page-link" href="#"><</a>`;
-    previousPage.addEventListener('click', function () {
-        goToPage(currentPage - 1, dataWhilePagination);
-    });
-    pagination.appendChild(previousPage);
+        const totalPages = Math.ceil(dataWhilePagination.length / rowsPerPage);
 
-    // Dynamic page numbers
-    const pageNumbersToShow = 3;
-    let startPage, endPage;
+        const firstPage = document.createElement('li');
+        firstPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+        firstPage.innerHTML = `<a class="page-link" href="#"><<</a>`;
+        firstPage.addEventListener('click', function () {
+            goToPage(1, dataWhilePagination);
+        });
+        pagination.appendChild(firstPage);
 
-    if (totalPages <= pageNumbersToShow) {
-        // Show all pages if total pages are less than or equal to the pages to show
-        startPage = 1;
-        endPage = totalPages;
-    } else {
-        if (currentPage <= 2) {
-            // If current page is near the start
+        const previousPage = document.createElement('li');
+        previousPage.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+        previousPage.innerHTML = `<a class="page-link" href="#"><</a>`;
+        previousPage.addEventListener('click', function () {
+            goToPage(currentPage - 1, dataWhilePagination);
+        });
+        pagination.appendChild(previousPage);
+
+        // Dynamic page numbers
+        const pageNumbersToShow = 3;
+        let startPage, endPage;
+
+        if (totalPages <= pageNumbersToShow) {
+            // Show all pages if total pages are less than or equal to the pages to show
             startPage = 1;
-            endPage = pageNumbersToShow;
-        } else if (currentPage >= totalPages - 1) {
-            // If current page is near the end
-            startPage = totalPages - (pageNumbersToShow - 1);
             endPage = totalPages;
         } else {
-            // Show the current page in the middle
-            startPage = currentPage - 1;
-            endPage = currentPage + 1;
+            if (currentPage <= 2) {
+                // If current page is near the start
+                startPage = 1;
+                endPage = pageNumbersToShow;
+            } else if (currentPage >= totalPages - 1) {
+                // If current page is near the end
+                startPage = totalPages - (pageNumbersToShow - 1);
+                endPage = totalPages;
+            } else {
+                // Show the current page in the middle
+                startPage = currentPage - 1;
+                endPage = currentPage + 1;
+            }
         }
-    }
 
-    // Add pages before dots
-    if (startPage > 1) {
-        const dots = document.createElement('li');
-        dots.className = `page-item disabled`;
-        dots.innerHTML = `<span class="page-link">...</span>`;
-        pagination.appendChild(dots);
-    }
+        // Add pages before dots
+        if (startPage > 1) {
+            const dots = document.createElement('li');
+            dots.className = `page-item disabled`;
+            dots.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(dots);
+        }
 
-    // Add main page numbers
-    for (let i = startPage; i <= endPage; i++) {
-        const li = document.createElement('li');
-        li.className = `page-item ${i === currentPage ? 'active' : ''}`;
-        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        li.addEventListener('click', function () {
-            goToPage(i, dataWhilePagination);
+        // Add main page numbers
+        for (let i = startPage; i <= endPage; i++) {
+            const li = document.createElement('li');
+            li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            li.addEventListener('click', function () {
+                goToPage(i, dataWhilePagination);
+            });
+            pagination.appendChild(li);
+        }
+
+        // Add pages after dots
+        if (endPage < totalPages) {
+            const dots = document.createElement('li');
+            dots.className = `page-item disabled`;
+            dots.innerHTML = `<span class="page-link">...</span>`;
+            pagination.appendChild(dots);
+        }
+
+        const nextPage = document.createElement('li');
+        nextPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+        nextPage.innerHTML = `<a class="page-link" href="#">></a>`;
+        nextPage.addEventListener('click', function () {
+            goToPage(currentPage + 1, dataWhilePagination);
         });
-        pagination.appendChild(li);
+        pagination.appendChild(nextPage);
+
+        const lastPage = document.createElement('li');
+        lastPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+        lastPage.innerHTML = `<a class="page-link" href="#">>></a>`;
+        lastPage.addEventListener('click', function () {
+            goToPage(totalPages, dataWhilePagination);
+        });
+        pagination.appendChild(lastPage);
     }
 
-    // Add pages after dots
-    if (endPage < totalPages) {
-        const dots = document.createElement('li');
-        dots.className = `page-item disabled`;
-        dots.innerHTML = `<span class="page-link">...</span>`;
-        pagination.appendChild(dots);
+    // Function to handle page change
+    function goToPage(page, currentData) {
+        currentPage = page;
+        renderTable(page, currentData);
     }
 
-    const nextPage = document.createElement('li');
-    nextPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-    nextPage.innerHTML = `<a class="page-link" href="#">></a>`;
-    nextPage.addEventListener('click', function () {
-        goToPage(currentPage + 1, dataWhilePagination);
-    });
-    pagination.appendChild(nextPage);
 
-    const lastPage = document.createElement('li');
-    lastPage.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
-    lastPage.innerHTML = `<a class="page-link" href="#">>></a>`;
-    lastPage.addEventListener('click', function () {
-        goToPage(totalPages, dataWhilePagination);
-    });
-    pagination.appendChild(lastPage);
+    // Initial table render
+    renderTable();
 }
 
-// Function to handle page change
-function goToPage(page, currentData) {
-    currentPage = page;
-    renderTable(page, currentData);
-}
 
 // Function to handle searching
 function searchTable(page) {
     const searchInput = document.getElementById('searchInput').value.toLowerCase();
-    
+
     const filteredData = data.filter(row =>
         row.ReagentCode.toString().includes(searchInput) ||
         row.en.toLowerCase().includes(searchInput)
     );
+
+    // Function to handle sorting
+    function sortTable(columnIndex, headerElement) {
+        let dataToSort = [...data]; // Clone data to avoid modifying the original array
+        const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
+
+        // Reset sorting for all column headers
+        document.querySelectorAll('.sortable').forEach((header, index) => {
+            if (index !== columnIndex) {
+                header.querySelector('.sort-arrow').innerHTML = ''; // Clear arrow for non-sorted columns
+            }
+        });
+
+        if (sortState.columnIndex === columnIndex) {
+            // Toggle sorting order in the sequence: asc -> desc -> none
+            if (sortState.order === 'none') {
+                sortState.order = 'asc'; // First click: ascending
+            } else if (sortState.order === 'asc') {
+                sortState.order = 'desc'; // Second click: descending
+            } else if (sortState.order === 'desc') {
+                sortState.order = 'none'; // Third click: no sorting (reset)
+            }
+        } else {
+            // New column, reset sorting
+            sortState.columnIndex = columnIndex;
+            sortState.order = 'asc'; // Start with ascending order for a new column
+        }
+
+        // Apply sorting
+        if (sortState.order === 'asc') {
+            dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] > b[columnKeys[columnIndex]]) ? 1 : -1);
+            headerElement.querySelector('.sort-arrow').innerHTML = '&#9650;'; // Up arrow for ascending
+        } else if (sortState.order === 'desc') {
+            dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] < b[columnKeys[columnIndex]]) ? 1 : -1);
+            headerElement.querySelector('.sort-arrow').innerHTML = '&#9660;'; // Down arrow for descending
+        } else if (sortState.order === 'none') {
+            dataToSort = [...data]; // Reset to the original unsorted data
+            headerElement.querySelector('.sort-arrow').innerHTML = ''; // No arrow when not sorted
+        }
+
+        // If sorting is undone, render the table with the current filtered/unfiltered data
+        const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
+        let currentData = dataToSort;
+        if (currentSearchInput !== '') {
+            currentData = dataToSort.filter(row =>
+                row.ReagentCode.toString().includes(currentSearchInput) ||
+                row.en.toLowerCase().includes(currentSearchInput)
+            );
+        }
+
+        renderTable(currentPage, currentSearchInput === '' ? dataToSort : currentData);
+    }
+
+    // Function to export table data to CSV
+    function exportToCSV() {
+        const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+        const csv = rows.map(row => {
+            const cells = Array.from(row.querySelectorAll('td'));
+            return cells.map(cell => `"${cell.textContent.replace(/"/g, '""')}"`).join(',');
+        }).join('\n');
+
+        const csvBlob = new Blob([csv], { type: 'text/csv' });
+        const csvUrl = URL.createObjectURL(csvBlob);
+        const a = document.createElement('a');
+        a.href = csvUrl;
+        a.download = 'table_data.csv';
+        a.click();
+    }
+
+    // Function to export table data to Excel
+    function exportToExcel() {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(document.querySelector('table'));
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'table_data.xlsx');
+    }
+
+    // Function to print the table
+    function printTable() {
+        const printWindow = window.open('', '', 'height=600,width=800');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
+        // Adding custom styles for printing
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { margin: 20px; }'); // Adjust margins as needed
+        printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
+        printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(document.querySelector('table').outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
 
     renderTable(page, filteredData);
 }
@@ -200,131 +302,44 @@ function showDropdown() {
 function selectSuggestion(suggestion) {
     const searchInput = document.getElementById('searchInput');
     searchInput.value = `${suggestion.en}`;
-    
+
     document.getElementById('suggestionsDropdown').style.display = 'none'; // Hide dropdown
     searchTable(1); // Search with the selected suggestion
 }
 
-// Function to handle sorting
-function sortTable(columnIndex, headerElement) {
-    let dataToSort = [...data]; // Clone data to avoid modifying the original array
-    const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
-
-    // Reset sorting for all column headers
-    document.querySelectorAll('.sortable').forEach((header, index) => {
-        if (index !== columnIndex) {
-            header.querySelector('.sort-arrow').innerHTML = ''; // Clear arrow for non-sorted columns
-        }
-    });
-
-    if (sortState.columnIndex === columnIndex) {
-        // Toggle sorting order in the sequence: asc -> desc -> none
-    if (sortState.order === 'none') {
-        sortState.order = 'asc'; // First click: ascending
-    } else if (sortState.order === 'asc') {
-        sortState.order = 'desc'; // Second click: descending
-    } else if (sortState.order === 'desc') {
-        sortState.order = 'none'; // Third click: no sorting (reset)
-    }
-    } else {
-        // New column, reset sorting
-        sortState.columnIndex = columnIndex;
-        sortState.order = 'asc'; // Start with ascending order for a new column
-    }
-
-    // Apply sorting
-    if (sortState.order === 'asc') {
-        dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] > b[columnKeys[columnIndex]]) ? 1 : -1);
-        headerElement.querySelector('.sort-arrow').innerHTML = '&#9650;'; // Up arrow for ascending
-    } else if (sortState.order === 'desc') {
-        dataToSort.sort((a, b) => (a[columnKeys[columnIndex]] < b[columnKeys[columnIndex]]) ? 1 : -1);
-        headerElement.querySelector('.sort-arrow').innerHTML = '&#9660;'; // Down arrow for descending
-    } else if (sortState.order === 'none') {
-        dataToSort = [...data]; // Reset to the original unsorted data
-        headerElement.querySelector('.sort-arrow').innerHTML = ''; // No arrow when not sorted
-    }
-
-    // If sorting is undone, render the table with the current filtered/unfiltered data
-    const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
-    let currentData = dataToSort;
-    if (currentSearchInput !== '') {
-        currentData = dataToSort.filter(row =>
-            row.ReagentCode.toString().includes(currentSearchInput) ||
-            row.en.toLowerCase().includes(currentSearchInput)
-        );
-    }
-
-    renderTable(currentPage, currentSearchInput === '' ? dataToSort : currentData);
-}
-
-// Function to export table data to CSV
-function exportToCSV() {
-    const rows = Array.from(document.querySelectorAll('#tableBody tr'));
-    const csv = rows.map(row => {
-        const cells = Array.from(row.querySelectorAll('td'));
-        return cells.map(cell => `"${cell.textContent.replace(/"/g, '""')}"`).join(',');
-    }).join('\n');
-
-    const csvBlob = new Blob([csv], { type: 'text/csv' });
-    const csvUrl = URL.createObjectURL(csvBlob);
-    const a = document.createElement('a');
-    a.href = csvUrl;
-    a.download = 'table_data.csv';
-    a.click();
-}
-
-// Function to export table data to Excel
-function exportToExcel() {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(document.querySelector('table'));
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'table_data.xlsx');
-}
-
-// Function to print the table
-function printTable() {
-    const printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Print Table</title>');
-    printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
-    // Adding custom styles for printing
-    printWindow.document.write('<style>');
-    printWindow.document.write('body { margin: 20px; }'); // Adjust margins as needed
-    printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
-    printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
-    printWindow.document.write('</style>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write(document.querySelector('table').outerHTML);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print();
-}
 
 // Event listeners
-document.getElementById('searchInput').addEventListener('input', function () {
-    currentPage = 1;
-    searchTable(currentPage)
-});
-
-document.getElementById('rowsPerPage').addEventListener('change', function () {
-    rowsPerPage = parseInt(this.value);
-    currentPage = 1;
-
-    const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
-    if (currentSearchInput != '') {
+const searchInputElement = document.getElementById('searchInput');
+if (searchInputElement) {
+    searchInputElement.addEventListener('input', function () {
+        currentPage = 1;
         searchTable(currentPage);
-    }
-    else {
-        renderTable()
-    }
-});
+    });
+}
 
-document.addEventListener('click', function(event) {
-    const dropdown = document.getElementById('suggestionsDropdown');
-    const searchInput = document.getElementById('searchInput');
-    if (!dropdown.contains(event.target) && !searchInput.contains(event.target)) {
-        dropdown.style.display = 'none';
-    }
-});
+const rowsPerPageElement = document.getElementById('rowsPerPage');
+if (rowsPerPageElement) {
+    rowsPerPageElement.addEventListener('change', function () {
+        rowsPerPage = parseInt(this.value);
+        currentPage = 1;
 
-// Initial table render
-renderTable();
+        const currentSearchInput = document.getElementById('searchInput').value.toLowerCase();
+        if (currentSearchInput != '') {
+            searchTable(currentPage);
+        }
+        else {
+            renderTable();
+        }
+    });
+}
+
+const suggestionsDropdownElement = document.getElementById('suggestionsDropdown');
+if (suggestionsDropdownElement) {
+    document.addEventListener('click', function (event) {
+        const dropdown = document.getElementById('suggestionsDropdown');
+        const searchInput = document.getElementById('searchInput');
+        if (!dropdown.contains(event.target) && !searchInput.contains(event.target)) {
+            dropdown.style.display = 'none';
+        }
+    });
+}
