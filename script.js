@@ -599,25 +599,16 @@ if (countrySingleSelectDropdownElement) {
 }
 
 // script to get the list of countries in multiple select dropdown
-const countryMultipleSelectDropdownElement = document.getElementById('countryMultipleSelectDropdown');
+const countryMultipleSelectDropdownElement = $('#countryMultipleSelectDropdown');
 if (countryMultipleSelectDropdownElement) {
     countries.forEach(country => {
-        const option = document.createElement('option');
-        option.value = country.code;
-        option.textContent = `${country.name} (${country.code})`;
-        countryMultipleSelectDropdownElement.appendChild(option);
+        const option = new Option(`${country.name} (${country.code})`, country.code, false, false);
+        countryMultipleSelectDropdownElement.append(option);
     });
     
-    // Initialize the multiselect
-    // $(document).ready(function() {
-        $('#countryMultipleSelectDropdown').multiselect({
-            includeSelectAllOption: true,
-            enableFiltering: true,
-            buttonWidth: '100%',
-            maxHeight: 300,
-            nonSelectedText: 'Select Countries',
-            selectAllText: 'Select All',
-            allSelectedText: 'All Selected'
-        });
-    // });
+    // Initialize Select2 on the dropdown
+    $('#countryMultipleSelectDropdown').select2({
+        placeholder: "Select multiple countries",
+        allowClear: true
+    });
 }
