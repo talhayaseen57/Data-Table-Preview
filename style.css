@@ -58,3 +58,55 @@
 .clear-selection:hover {
   color: gray;
 }
+
+/* for multiple countires select dropdown */
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1;
+}
+
+.dropdown-list-item {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-list-item:hover {
+  background-color: #f1f1f1;
+}
+
+.selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 38px;
+  cursor: pointer;
+}
+
+.selected-item {
+  background-color: #007bff;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.selected-item .remove-item {
+  margin-left: 8px;
+  cursor: pointer;
+}

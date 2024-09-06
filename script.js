@@ -599,16 +599,64 @@ if (countrySingleSelectDropdownElement) {
 }
 
 // script to get the list of countries in multiple select dropdown
-const countryMultipleSelectDropdownElement = $('#countryMultipleSelectDropdown');
+const countryMultipleSelectDropdownElement = document.getElementById('countryMultipleSelectDropdown');
 if (countryMultipleSelectDropdownElement) {
-    countries.forEach(country => {
-        const option = new Option(`${country.name} (${country.code})`, country.code, false, false);
-        countryMultipleSelectDropdownElement.append(option);
-    });
-    
-    // Initialize Select2 on the dropdown
-    $('#countryMultipleSelectDropdown').select2({
-        placeholder: "Select multiple countries",
-        allowClear: true
-    });
+    const dropdownList = document.getElementById('dropdownList');
+    const selectedItems = document.getElementById('selectedItems');
+    let selectedCountries = [];
+
+    // Function to toggle dropdown visibility
+    function toggleDropdown() {
+        dropdownList.style.display = dropdownList.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Function to render the dropdown list
+    function renderDropdownList() {
+        dropdownList.innerHTML = '';
+        countries.forEach(country => {
+            const item = document.createElement('div');
+            item.classList.add('dropdown-list-item');
+            item.textContent = `${country.name} - ${country.code}`;
+            item.addEventListener('click', () => selectCountry(country));
+            dropdownList.appendChild(item);
+        });
+    }
+
+    // Function to render the selected countries
+    function renderSelectedItems() {
+        selectedItems.innerHTML = '';
+        selectedCountries.forEach(country => {
+            const item = document.createElement('div');
+            item.classList.add('selected-item');
+            item.textContent = `${country.name}  - ${country.code}`;
+            const removeIcon = document.createElement('span');
+            removeIcon.classList.add('remove-item');
+            removeIcon.innerHTML = '&times;';
+            removeIcon.addEventListener('click', () => removeCountry(country));
+            item.appendChild(removeIcon);
+            selectedItems.appendChild(item);
+        });
+    }
+
+    // Function to handle country selection
+    function selectCountry(country) {
+        if (!selectedCountries.includes(country)) {
+            selectedCountries.push(country);
+            renderSelectedItems();
+        }
+        dropdownList.style.display = 'none';
+    }
+
+    // Function to remove a selected country
+    function removeCountry(country) {
+        selectedCountries = selectedCountries.filter(c => c !== country);
+        renderSelectedItems();
+    }
+
+    // Event listener to toggle dropdown on click
+    selectedItems.addEventListener('click', toggleDropdown);
+
+    // Initialize the dropdown list
+    renderDropdownList();
 }
+
