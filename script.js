@@ -37,6 +37,7 @@ let currentPage = 1;
 let rowsPerPage = 5;
 let sortState = { columnIndex: -1, order: 'none' }; // Initial state
 
+
 // Function to render the table
 const tableBodyElement = document.getElementById('tableBody');
 if (tableBodyElement) {
@@ -158,7 +159,6 @@ if (tableBodyElement) {
         renderTable(page, currentData);
     }
 
-
     // Initial table render
     renderTable();
 }
@@ -173,7 +173,13 @@ function searchTable(page) {
         row.en.toLowerCase().includes(searchInput)
     );
 
-    // Function to handle sorting
+    renderTable(page, filteredData);
+}
+
+
+// Function to handle sorting
+const sortableColoumnElement = document.getElementById("sortableColoumn");
+if (sortableColoumnElement) {
     function sortTable(columnIndex, headerElement) {
         let dataToSort = [...data]; // Clone data to avoid modifying the original array
         const columnKeys = ['ReagentCode', 'en', 'Disabled']; // Keys for sorting
@@ -224,51 +230,8 @@ function searchTable(page) {
 
         renderTable(currentPage, currentSearchInput === '' ? dataToSort : currentData);
     }
-
-    // Function to export table data to CSV
-    function exportToCSV() {
-        const rows = Array.from(document.querySelectorAll('#tableBody tr'));
-        const csv = rows.map(row => {
-            const cells = Array.from(row.querySelectorAll('td'));
-            return cells.map(cell => `"${cell.textContent.replace(/"/g, '""')}"`).join(',');
-        }).join('\n');
-
-        const csvBlob = new Blob([csv], { type: 'text/csv' });
-        const csvUrl = URL.createObjectURL(csvBlob);
-        const a = document.createElement('a');
-        a.href = csvUrl;
-        a.download = 'table_data.csv';
-        a.click();
-    }
-
-    // Function to export table data to Excel
-    function exportToExcel() {
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.table_to_sheet(document.querySelector('table'));
-        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-        XLSX.writeFile(wb, 'table_data.xlsx');
-    }
-
-    // Function to print the table
-    function printTable() {
-        const printWindow = window.open('', '', 'height=600,width=800');
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
-        // Adding custom styles for printing
-        printWindow.document.write('<style>');
-        printWindow.document.write('body { margin: 20px; }'); // Adjust margins as needed
-        printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
-        printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
-        printWindow.document.write('</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write(document.querySelector('table').outerHTML);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-    }
-
-    renderTable(page, filteredData);
 }
+
 
 // Function to show dropdown with suggestions
 function showDropdown() {
@@ -308,7 +271,7 @@ function selectSuggestion(suggestion) {
 }
 
 
-// Event listeners
+// Event listeners for Data Table page
 const searchInputElement = document.getElementById('searchInput');
 if (searchInputElement) {
     searchInputElement.addEventListener('input', function () {
@@ -344,6 +307,62 @@ if (suggestionsDropdownElement) {
     });
 }
 
+
+// Function to export table data to CSV
+const csvExportButtonElement = document.getElementById('csvExportButton');
+if (csvExportButtonElement) {
+    function exportToCSV() {
+        const rows = Array.from(document.querySelectorAll('#tableBody tr'));
+        const csv = rows.map(row => {
+            const cells = Array.from(row.querySelectorAll('td'));
+            return cells.map(cell => `"${cell.textContent.replace(/"/g, '""')}"`).join(',');
+        }).join('\n');
+
+        const csvBlob = new Blob([csv], { type: 'text/csv' });
+        const csvUrl = URL.createObjectURL(csvBlob);
+        const a = document.createElement('a');
+        a.href = csvUrl;
+        a.download = 'table_data.csv';
+        a.click();
+    }
+}
+
+
+// Function to export table data to Excel
+const excelExportButtonElement = document.getElementById('excelExportButton');
+if (excelExportButtonElement) {
+    function exportToExcel() {
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.table_to_sheet(document.querySelector('table'));
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        XLSX.writeFile(wb, 'table_data.xlsx');
+    }
+}
+
+
+// Function to print the table
+const printButtonElement = document.getElementById('printButton');
+if (printButtonElement) {
+    function printTable() {
+        const printWindow = window.open('', '', 'height=600,width=800');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">');
+        // Adding custom styles for printing
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { margin: 20px; }'); // Adjust margins as needed
+        printWindow.document.write('table { width: 100%; border-collapse: collapse; }');
+        printWindow.document.write('th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(document.querySelector('table').outerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    }
+}
+
+
+// script for Clear Radio Buttons Selection
 const clearRadioSelectionElement = document.getElementById('clearRadioSelection');
 if (clearRadioSelectionElement) {
     clearRadioSelectionElement.addEventListener('click', function () {
@@ -356,6 +375,8 @@ if (clearRadioSelectionElement) {
     });
 }
 
+
+// script for JS Enabelled Dropdown
 const jsEnabelledDropdownElement = document.getElementById('jsEnabelledDropdown');
 if (jsEnabelledDropdownElement) {
     jsEnabelledDropdownElement.addEventListener('change', function () {
@@ -601,30 +622,30 @@ if (countrySingleSelectDropdownElement) {
 // script to get the list of countries in multiple select dropdown
 const countryMultipleSelectDropdownElement = document.getElementById('countryMultipleSelectDropdown');
 if (countryMultipleSelectDropdownElement) {
-    const dropdownList = document.getElementById('dropdownList');
-    const selectedItems = document.getElementById('selectedItems');
+    const dropdownListElement = document.getElementById('dropdownList');
+    const selectedItemsElement = document.getElementById('selectedItems');
     let selectedCountries = [];
 
     // Function to toggle dropdown visibility
     function toggleDropdown() {
-        dropdownList.style.display = dropdownList.style.display === 'block' ? 'none' : 'block';
+        dropdownListElement.style.display = dropdownListElement.style.display === 'block' ? 'none' : 'block';
     }
 
     // Function to render the dropdown list
     function renderDropdownList() {
-        dropdownList.innerHTML = '';
+        dropdownListElement.innerHTML = '';
         countries.forEach(country => {
             const item = document.createElement('div');
             item.classList.add('dropdown-list-item');
             item.textContent = `${country.name} - ${country.code}`;
             item.addEventListener('click', () => selectCountry(country));
-            dropdownList.appendChild(item);
+            dropdownListElement.appendChild(item);
         });
     }
 
     // Function to render the selected countries
     function renderSelectedItems() {
-        selectedItems.innerHTML = '';
+        selectedItemsElement.innerHTML = '';
         selectedCountries.forEach(country => {
             const item = document.createElement('div');
             item.classList.add('selected-item');
@@ -634,7 +655,7 @@ if (countryMultipleSelectDropdownElement) {
             removeIcon.innerHTML = '&times;';
             removeIcon.addEventListener('click', () => removeCountry(country));
             item.appendChild(removeIcon);
-            selectedItems.appendChild(item);
+            selectedItemsElement.appendChild(item);
         });
     }
 
@@ -644,7 +665,7 @@ if (countryMultipleSelectDropdownElement) {
             selectedCountries.push(country);
             renderSelectedItems();
         }
-        dropdownList.style.display = 'none';
+        dropdownListElement.style.display = 'none';
     }
 
     // Function to remove a selected country
@@ -654,10 +675,8 @@ if (countryMultipleSelectDropdownElement) {
     }
 
     // Event listener to toggle dropdown on click
-    selectedItems.addEventListener('click', toggleDropdown);
+    selectedItemsElement.addEventListener('click', toggleDropdown);
 
     // Initialize the dropdown list
     renderDropdownList();
-    
 }
-
