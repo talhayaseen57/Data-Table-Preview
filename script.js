@@ -658,5 +658,6 @@ if (countryMultipleSelectDropdownElement) {
 
     // Initialize the dropdown list
     renderDropdownList();
+    
 }
 
