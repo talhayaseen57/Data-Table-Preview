@@ -47,3 +47,14 @@
 .form-control.is-invalid:focus {
   box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
+
+/* for the clear my choice option */
+.clear-selection {
+  text-decoration: underline;
+  color: darkgray;
+  cursor: pointer;
+}
+
+.clear-selection:hover {
+  color: gray;
+}

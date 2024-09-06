@@ -343,3 +343,15 @@ if (suggestionsDropdownElement) {
         }
     });
 }
+
+const clearRadioSelectionElement = document.getElementById('clearRadioSelection');
+if (clearRadioSelectionElement) {
+    clearRadioSelectionElement.addEventListener('click', function() {
+        // Get all radio buttons with name 'radioOptions2'
+        const radioButtons = document.getElementsByName('radioOptions2');
+        // Loop through radio buttons and uncheck them
+        radioButtons.forEach(function(radio) {
+            radio.checked = false;
+        });
+    });
+}
