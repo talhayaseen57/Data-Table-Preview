@@ -1,67 +1,99 @@
-# HTML Elements
+# HTML Elements Preview
 
-This repository provides a customised implementation for simple and dynamic data table that supports sorting, searching, pagination, and export functionalities. The table is built with HTML, CSS (Bootstrap), and JavaScript.
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen)](https://talhayaseen57.github.io/HTML-Elements/)
 
-## Features of Data Tables / Grid View Table
+This project demonstrates a collection of customized HTML elements styled with Bootstrap and enhanced with JavaScript functionalities. The focus is on three main sections: a home page, data tables, and form elements.
 
-- **Sortable Columns**: Click on any column header to sort the table by that column.
-- **Searchable Data**: Use the search bar to filter table rows based on the input text.
-- **Paginated View**: Navigate through the table pages with pagination controls.
-- **Export Data**: Export table data to CSV, Excel, or print the table directly to PDF.
-- **Dynamic Suggestions**: Real-time suggestions in the search bar based on the table data.
+### 🌐 [Live Preview](https://talhayaseen57.github.io/HTML-Elements/)
 
-## Demo
+## Table of Contents
 
-You can view a live demo of this project on GitHub Pages:
-[HTML Elements Preview](https://talhayaseen57.github.io/HTML-Elements/)
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [File Structure](#file-structure)
+- [Technologies Used](#technologies-used)
+- [How to Use](#how-to-use)
+- [Contributing](#contributing)
+- [License](#license)
 
-Feel free to visit the link to see the data table preview in action.
+## Project Overview
 
-## Files
+This repository provides an implementation of various HTML elements such as data tables and form elements using HTML, CSS (Bootstrap) and JavaScript. It's a good reference for beginners and web developers to understand and explore how to implement common UI components with clean and responsive designs.
 
-- **.html files**: The HTML files contain the structure of the webpage.
-- **style.css**: The CSS file for custom styling (alongside Bootstrap).
-- **script.js**: The JavaScript file that handles functionalities.
+## Features
+
+- **Data Table:**
+  - Search functionality with suggestions.
+  - Sortable columns.
+  - Pagination.
+  - Export options (CSV, Excel, Print to PDF).
+
+- **Form Elements:**
+  - Textboxes and text areas with different sizes and styles.
+  - Responsive checkboxes and radio buttons.
+  - Dropdowns with both single and multiple selections.
+  - Bootstrap Duallistbox implementation.
+
+## File Structure
+
+```bash
+HTML-Elements/
+│
+├── index.html           # Homepage with links to other pages
+├── datatable.html       # Data table implementation with search, sort, and export features
+├── formelements.html    # Various form elements like textboxes, checkboxes, radio buttons, and dropdowns
+├── script.js            # JavaScript file for handling dynamic functionality across pages
+└── style.css            # Custom styles (if used, otherwise default Bootstrap styles)
+```
+
+### Key Pages
+
+- **Homepage (`index.html`)**: A landing page with links to explore data tables and form elements.
+- **Data Table (`datatable.html`)**: A page showcasing a dynamic data table with sorting, searching, and export options.
+- **Form Elements (`formelements.html`)**: A page demonstrating different form elements like text fields, checkboxes, radio buttons, and dropdowns.
+
+## Technologies Used
+
+- **HTML5**
+- **CSS3**
+  - **Bootstrap 5**: For responsive design and styling.
+- **JavaScript**
+  - For dynamic content rendering, sorting, and form handling.
 
 ## How to Use
 
-To run the project locally, follow these steps:
-
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/talhayaseen57/HTML-Elements.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd HTML-Elements
-   ```
-3. Open the `index.html` file in your web browser.
 
-4. Interact with the table in `database.html`:
-   - **Search**: Type in the search bar to filter the table rows. Suggestions will appear as you type.
-   - **Sort**: Click on the column headers to sort the table.
-   - **Paginate**: Use the pagination controls to navigate through the pages.
-   - **Export**: Click on the export buttons to download the data as CSV, Excel, or print it.
+```bash
+git clone https://github.com/talhayaseen57/HTML-Elements.git
+```
 
-## Dependencies
+2. Open the project directory:
 
-This project uses the following libraries:
-- [Bootstrap 5.3.3](https://getbootstrap.com/)
-- [Font Awesome 5.15.4](https://fontawesome.com/)
-- [xlsx.js](https://cdnjs.com/libraries/xlsx) for Excel export
-- [html2canvas](https://html2canvas.hertzen.com/) for printing to PDF
+```bash
+cd HTML-Elements
+```
 
-These dependencies are loaded via CDN.
+3. Open `index.html` in your web browser to explore the project locally:
 
-## Customization
+```bash
+open index.html
+```
 
-- **Rows Per Page**: You can select how many rows to display per page from the dropdown.
-- **Data**: The data is currently hardcoded in `script.js`. You can replace it with your own data by modifying the `data` array.
+4. Alternatively, visit the [live GitHub Pages site](https://talhayaseen57.github.io/HTML-Elements/) to view the project.
 
 ## Contributing
 
-Feel free to submit issues or pull requests if you have suggestions or improvements.
+Contributions are welcome! If you have suggestions, feel free to open an issue or create a pull request. For major changes, please open an issue first to discuss what you would like to change.
+
+### Steps to Contribute:
+
+1. Fork this repository.
+2. Create your feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a pull request.
 
 ## License
 
-This project is distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
