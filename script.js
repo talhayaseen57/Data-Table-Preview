@@ -680,3 +680,63 @@ if (countryMultipleSelectDropdownElement) {
     // Initialize the dropdown list
     renderDropdownList();
 }
+
+// script for duallistbox element
+const availableDuallistElement = document.getElementById('available');
+if (availableDuallistElement) {
+    // Populate the avaialable section
+    countries.forEach(country => {
+        const option = document.createElement('option');
+        // option.value = country;
+        // option.textContent = country;
+        option.value = country.code;
+        option.textContent = `${country.name} - ${country.code}`;
+        availableDuallistElement.appendChild(option);
+    });
+
+    document.getElementById('moveRight').addEventListener('click', function () {
+        moveItems('available', 'selected');
+    });
+    
+    document.getElementById('moveLeft').addEventListener('click', function () {
+        moveItems('selected', 'available');
+    });
+    
+    function moveItems(sourceId, destinationId) {
+        const source = document.getElementById(sourceId);
+        const destination = document.getElementById(destinationId);
+        const selectedOptions = Array.from(source.selectedOptions);
+    
+        selectedOptions.forEach(option => {
+            destination.appendChild(option);
+        });
+    }
+}
+
+// Function to filter listbox options
+const searchAvailableElement = document.getElementById('searchAvailable');
+if (searchAvailableElement) {
+    function filterOptions(searchInputId, listboxId) {
+        const searchInput = document.getElementById(searchInputId);
+        const filter = searchInput.value.toLowerCase();
+        const listbox = document.getElementById(listboxId);
+        const options = Array.from(listbox.options);
+    
+        options.forEach(option => {
+            if (option.text.toLowerCase().includes(filter)) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    }
+    
+    // Add event listeners to the search inputs
+    document.getElementById('searchAvailable').addEventListener('input', function () {
+        filterOptions('searchAvailable', 'available');
+    });
+    
+    document.getElementById('searchSelected').addEventListener('input', function () {
+        filterOptions('searchSelected', 'selected');
+    });
+}
