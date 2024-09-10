@@ -697,16 +697,16 @@ if (availableDuallistElement) {
     document.getElementById('moveRight').addEventListener('click', function () {
         moveItems('available', 'selected');
     });
-    
+
     document.getElementById('moveLeft').addEventListener('click', function () {
         moveItems('selected', 'available');
     });
-    
+
     function moveItems(sourceId, destinationId) {
         const source = document.getElementById(sourceId);
         const destination = document.getElementById(destinationId);
         const selectedOptions = Array.from(source.selectedOptions);
-    
+
         selectedOptions.forEach(option => {
             destination.appendChild(option);
         });
@@ -721,7 +721,7 @@ if (searchAvailableElement) {
         const filter = searchInput.value.toLowerCase();
         const listbox = document.getElementById(listboxId);
         const options = Array.from(listbox.options);
-    
+
         options.forEach(option => {
             if (option.text.toLowerCase().includes(filter)) {
                 option.style.display = '';
@@ -730,12 +730,12 @@ if (searchAvailableElement) {
             }
         });
     }
-    
+
     // Add event listeners to the search inputs
     document.getElementById('searchAvailable').addEventListener('input', function () {
         filterOptions('searchAvailable', 'available');
     });
-    
+
     document.getElementById('searchSelected').addEventListener('input', function () {
         filterOptions('searchSelected', 'selected');
     });
