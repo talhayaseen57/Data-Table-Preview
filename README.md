@@ -2,7 +2,7 @@
 
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen)](https://talhayaseen57.github.io/HTML-Elements/)
 
-This project demonstrates a collection of customized HTML elements styled with Bootstrap and enhanced with JavaScript functionalities. The focus is on three main sections: a home page, data tables, and form elements.
+This project demonstrates a collection of customized HTML elements developed using only HTML, styled with CSS (Bootstrap) and enhanced with JavaScript functionalities. The focus is on two elements: data tables with enhansed functionalities, and some form elements.
 
 ### 🌐 [Live Preview](https://talhayaseen57.github.io/HTML-Elements/)
 
